@@ -1,0 +1,62 @@
+-- Owners and Pets
+
+DROP TABLE IF EXISTS pets;
+DROP TABLE IF EXISTS owners;
+
+CREATE TABLE owners (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+CREATE TABLE pets (
+    id SERIAL PRIMARY KEY,
+    owner_id INTEGER REFERENCES owners(id),
+    type VARCHAR(255),
+    name VARCHAR(255)
+);
+
+INSERT INTO owners (id, name)
+VALUES (1, 'Geordi');
+INSERT INTO owners (id, name)
+VALUES (2, 'Janeway');
+INSERT INTO owners (id, name)
+VALUES (3, 'Data');
+INSERT INTO owners (id, name)
+VALUES (4, 'Spock');
+
+INSERT INTO pets (id, owner_id, type, name)
+VALUES (1, 4, 'Monkey', 'Mittens');
+INSERT INTO pets (id, owner_id, type, name)
+VALUES (2, null, 'Lizard', 'Carol');
+INSERT INTO pets (id, owner_id, type, name)
+VALUES (3, 1, 'Dog', 'Rufus');
+INSERT INTO pets (id, owner_id, type, name)
+VALUES (4, 3, 'Cat', 'Spot');
+
+-- INNER JOIN
+
+SELECT pets.name, owners.name
+FROM owners
+INNER JOIN pets
+ON pets.owner_id = owners.id;
+
+-- LEFT JOIN
+
+SELECT pets.name, owners.name
+FROM owners
+LEFT JOIN pets
+ON pets.owner_id = owners.id;
+
+-- RIGHT JOIN
+
+SELECT pets.name, owners.name
+FROM owners
+RIGHT JOIN pets
+ON pets.owner_id = owners.id;
+
+-- OUTER JOIN
+
+SELECT pets.name, owners.name
+FROM owners
+FULL OUTER JOIN pets
+ON pets.owner_id = owners.id;
